@@ -6,7 +6,7 @@
  * @i: is the parametre for _abs to calculate the absolute value for.
  */
 
-int _abs(int)
+int _abs(int i)
 {
 	if (i >= 0)
 		return (i);
