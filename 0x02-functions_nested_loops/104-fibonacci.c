@@ -8,7 +8,7 @@
 int main(void)
 {
 	int i;
-	unsigned long long fib = 0, a = 0, b = 1;
+	unsigned long fib = 0, a = 0, b = 1;
 
 	for (i = 0; i < 98; i++)
 	{
@@ -16,9 +16,9 @@ int main(void)
 		a = b;
 		b = fib;
 		if (i < 97)
-			printf("%llu, ", fib);
+			printf("%lu, ", fib);
 		else
-			printf("%llu\n", fib);
+			printf("%lu\n", fib);
 	}
 	return (0);
 }
