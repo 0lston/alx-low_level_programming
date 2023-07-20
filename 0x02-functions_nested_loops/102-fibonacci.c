@@ -7,16 +7,18 @@
 
 int main(void)
 {
-	int i; 
+	int i;
 	unsigned long fib = 0, a = 0, b = 1;
 
-	for (i = 0; i < 49; i++)
+	for (i = 0; i < 50; i++)
 	{
 		fib = a + b;
 		a = b;
 		b = fib;
-		printf("%ld, ", fib);
+		if (i < 49)
+			printf("%ld, ", fib);
+		else
+			printf("%ld\n", fib);
 	}
-	printf("%ld\n", fib);
 	return (0);
 }
