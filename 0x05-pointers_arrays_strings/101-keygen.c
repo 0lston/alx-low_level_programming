@@ -13,21 +13,18 @@ int main(void)
 {
 	int sum = 0,
 	    r = 0;
+	char str[] = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
 	srand(time(NULL));
 
-	while (1)
+	while (sum < 2772)
 	{
-		r = rand() % 127;
+		r = str[rand() % 95];
 		if ((sum + r) > 2772)
 			break;
-		if (r)
-		{
-			sum = sum + r;
-			printf("%c", r);
-		}
+		sum = sum + r;
+		printf("%c", r);
 	}
 	printf("%c", (2772 - sum));
-
-	return (0);
+		return (0);
 }
