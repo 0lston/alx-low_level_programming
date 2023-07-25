@@ -19,7 +19,7 @@ int main(void)
 
 	srand(time(NULL));
 
-	for (i = 0; sum <= SUM - 126; i++)
+	for (i = 0; sum < SUM - 126; i++)
 	{
 		password[i] = 32 + rand() % 95;
 		sum += password[i];
@@ -27,4 +27,6 @@ int main(void)
 	password[i++] = SUM - sum;
 	password[i] = '\0';
 	printf("%s", password);
+
+	return(0);
 }
