@@ -2,8 +2,6 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define SUM 2772
-
 /**
  * main - Generates random valid passwords for the
  *        program 101-crackme.
@@ -14,25 +12,22 @@
 int main(void)
 {
 	int sum = 0,
-	    i = 0;
-	char password[87];
+	    r = 0;
 
 	srand(time(NULL));
 
-	for (i = 0; i < 86; i++)
+	while (1)
 	{
-		if (SUM - sum <= 126 + 32)
-		{
-			password[i] = (SUM - sum) % 127;
-			sum += password[i++];
-			password[i++] = (SUM - sum) % 127;
+		r = rand() % 127;
+		if ((sum + r) > 2772)
 			break;
+		if (r)
+		{
+			sum = sum + r;
+			printf("%c", r);
 		}
-		password[i] = 32 + rand() % 95;
-		sum += password[i];
 	}
-	password[i] = '\0',
-		printf("%s", password);
+	printf("%c", (2772 - sum));
 
 	return (0);
 }
