@@ -33,4 +33,6 @@ int main(void)
 	}
 	password[i] = '\0',
 		printf("%s", password);
+
+	return (0);
 }
