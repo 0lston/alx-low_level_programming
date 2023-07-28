@@ -30,10 +30,9 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 			sum += n1[i--] - '0';
 		if (j >= 0)
 			sum += n2[j--] - '0';
-		if (k >= 0)
-			r[k--] = sum % 10 + '0';
-		else
+		if (k < 0)
 			return (0);
+		r[k--] = sum % 10 + '0';
 		sum /= 10;
 	}
 
@@ -63,5 +62,3 @@ int last_char(char *str)
 		i++;
 	return (i - 1);
 }
-
-
