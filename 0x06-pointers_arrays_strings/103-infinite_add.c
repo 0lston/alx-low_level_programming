@@ -19,10 +19,8 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
 	int i = last_char(n1),
 	    j = last_char(n2),
-	    k = size_r - 1,
+	    k = size_r - 2,
 	    sum = 0;
-
-	r[k--] = '\0';
 
 	while (i >= 0 || j >= 0 || sum)
 	{
@@ -43,6 +41,7 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 	if (k++)
 		for (i = 0; r[k]; k++, i++)
 			r[i] = r[k];
+	r[i] = '\0';
 
 	return (r);
 
