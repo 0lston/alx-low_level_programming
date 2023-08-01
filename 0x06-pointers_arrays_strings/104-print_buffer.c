@@ -19,20 +19,21 @@ void print_buffer(char *b, int size)
 
 	if (!size)
 		printf("\n");
-	while (size > 0)
+	while (i < size)
 	{
 		c = 0;
 		printf("%.8x: ", i);
-		while (c < 10 && size)
+		while (c < 10)
 		{
-			printf("%.2x", *(b + i));
-			if (i % 2 != 0)
+			if (i >= size)
+				printf("  ");
+			else
+				printf("%.2x", *(b + i));
+			if (i % 2 && i)
 				printf(" ");
 			c++;
 			i++;
-			size--;
 		}
-
 		print_ascii(b, i - c, i);
 	}
 }
@@ -46,17 +47,7 @@ void print_buffer(char *b, int size)
  */
 void print_ascii(char *b, int j, int i)
 {
-	int c = i;
-
-	while (i % 10)
-	{
-		printf("  ");
-		if (i % 2 != 0)
-			printf(" ");
-		i++;
-	}
-
-	for (; j < c; j++)
+	for (; j < i; j++)
 	{
 		if (*(b + j) >= 32 &&
 				*(b + j) <= 126)
