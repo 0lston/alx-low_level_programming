@@ -46,12 +46,12 @@ int helper(char *start, char *end)
  *
  * Return: The length of the string.
  */
-
 int _strlen(char *s)
 {
 	int len = 0;
 
-	while (s[len])
-		len++;
-	return (len);
+	if (*s)
+		return (_strlen(s + 1) + 1);
+	else
+		return (len);
 }
