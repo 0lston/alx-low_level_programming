@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 	int cents = atoi(argv[1]);
 	int coins[] = {25, 10, 5, 2, 1};
 	int min_coins = 0;
+	int i;
 
 	if (argc != 2)
 	{
@@ -29,7 +30,7 @@ int main(int argc, char *argv[])
 		return (0);
 	}
 
-	for (int i = 0; i < 5; i++)
+	for (i = 0; i < 5; i++)
 	{
 		min_coins += cents / coins[i];
 		cents %= coins[i];
