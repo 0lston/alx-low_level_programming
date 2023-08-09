@@ -25,7 +25,7 @@ char **strtow(char *str)
 
 	if (!str || !*str || !count_words(str))
 		return (NULL);
-	words = (char **)malloc(sizeof(char *) * count_words(str) + 1);
+	words = (char **)malloc(sizeof(char *) * (count_words(str) + 1));
 	if (!words)
 		return (NULL);
 
@@ -66,11 +66,11 @@ int count_words(char *str)
 {
 	int i = 0, count = 0;
 
-	for (i = 0; str[i]; i++)
+	while (str[i] == ' ')
+		i++;
+	for (; str[i]; i++)
 	{
-		if (str[i] == ' ')
-			continue;
-		if ((str[i - 1] == ' ' && str[i] != ' ') || !str[i])
+		if ((str[i] == ' ' && str[i + 1] != ' ') || !str[i + 1])
 			count++;
 	}
 	return (count);
