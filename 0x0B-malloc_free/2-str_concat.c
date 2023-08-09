@@ -43,7 +43,7 @@ int _strlen(char *str)
 	int len = 0;
 
 	if (!str)
-		str = "";
+		return (0);
 	while (str[len])
 		len++;
 
