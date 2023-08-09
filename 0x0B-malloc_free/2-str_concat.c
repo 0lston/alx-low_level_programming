@@ -18,8 +18,6 @@ char *str_concat(char *s1, char *s2)
 	int i, j;
 	char *concat_s;
 
-	if (!s1 || !s2)
-		return (NULL);
 	concat_s = malloc(_strlen(s1) + _strlen(s2) + 1);
 
 	if (!concat_s)
@@ -44,7 +42,10 @@ int _strlen(char *str)
 {
 	int len = 0;
 
+	if (!str)
+		str = "";
 	while (str[len])
 		len++;
+
 	return (len);
 }
