@@ -5,98 +5,86 @@ int word_len(char *str);
 int count_words(char *str);
 char **strtow(char *str);
 
-/**
- * word_len - Locates the index marking the end of the
- *            first word contained within a string.
- * @str: The string to be searched.
- *
- * Return: The index marking the end of the initial word pointed to by str.
- */
-int word_len(char *str)
-{
-	int index = 0, len = 0;
-
-	while (*(str + index) && *(str + index) != ' ')
-	{
-		len++;
-		index++;
-	}
-
-	return (len);
-}
 
 /**
- * count_words - Counts the number of words contained within a string.
- * @str: The string to be searched.
+ * strtow - Splits a string into an array of words.
+ * @str: The input string to be split.
  *
- * Return: The number of words contained within str.
+ * Return: A pointer to an array of strings (words), or NULL on failure.
+ *         Each element of the array contains a single word, null-terminated.
+ *         The last element of the array is NULL.
  */
-int count_words(char *str)
+
+char **strtow(char *str)
 {
-	int index = 0, words = 0, len = 0;
+	char **words;
+	int len;
+	int i = 0, j;
+	int w_index = 0;
 
-	for (index = 0; *(str + index); index++)
-		len++;
+	if (!str || !*str)
+		return (NULL);
+	words = (char **)malloc(sizeof(char *) * count_words(str));
+	if (!words)
+		return (NULL);
 
-	for (index = 0; index < len; index++)
+	while (str[i])
 	{
-		if (*(str + index) != ' ')
+		while (str[i] == ' ')
+			i++;
+		if (!str[i])
+			break;
+		len = word_len(&str[i]);
+		words[w_index] = (char *)malloc(sizeof(char) * (len + 1));
+		if (!words[w_index])
 		{
-			words++;
-			index += word_len(str + index);
+			for (j = 0; j < w_index; j++)
+				free(words[j]);
+			free(words);
+			return (NULL);
 		}
-	}
+		for (j = 0; j < len; j++)
+			words[w_index][j] = str[i + j];
+		words[w_index][len] = '\0';
 
+		w_index++;
+		i += len;
+	}
+	words[w_index] = NULL;
 	return (words);
 }
 
 /**
- * strtow - Splits a string into words.
- * @str: The string to be split.
+ * count_words - Counts the number of words in a string.
+ * @str: The string containing the words.
  *
- * Return: If str = NULL, str = "", or the function fails - NULL.
- *         Otherwise - a pointer to an array of strings (words).
+ * Return: The number of words in the string.
  */
-char **strtow(char *str)
+
+int count_words(char *str)
 {
-	char **strings;
-	int index = 0, words, w, letters, l;
+	int i, count = 0;
 
-	if (str == NULL || str[0] == '\0')
-		return (NULL);
-
-	words = count_words(str);
-	if (words == 0)
-		return (NULL);
-
-	strings = malloc(sizeof(char *) * (words + 1));
-	if (strings == NULL)
-		return (NULL);
-
-	for (w = 0; w < words; w++)
+	for (i = 0; str[i]; i++)
 	{
-		while (str[index] == ' ')
-			index++;
-
-		letters = word_len(str + index);
-
-		strings[w] = malloc(sizeof(char) * (letters + 1));
-
-		if (strings[w] == NULL)
-		{
-			for (; w >= 0; w--)
-				free(strings[w]);
-
-			free(strings);
-			return (NULL);
-		}
-
-		for (l = 0; l < letters; l++)
-			strings[w][l] = str[index++];
-
-		strings[w][l] = '\0';
+		if ((str[i] == ' ' && str[i + 1] != ' ') || !str[i + 1])
+			count++;
 	}
-	strings[w] = NULL;
+	return (count);
+}
 
-	return (strings);
+/**
+ * word_len - Calculates the length of a word in a string.
+ * @str: The string containing the word.
+ *
+ * Return: The length of the word.
+ */
+
+int word_len(char *str)
+{
+	int len = 0;
+
+	while (str[len] != ' ' && str[len])
+		len++;
+	return (len);
 }
