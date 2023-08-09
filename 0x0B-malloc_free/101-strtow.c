@@ -1,89 +1,102 @@
-#include <stdio.h>
+#include "main.h"
 #include <stdlib.h>
 
-int is_space(char c)
+int word_len(char *str);
+int count_words(char *str);
+char **strtow(char *str);
+
+/**
+ * word_len - Locates the index marking the end of the
+ *            first word contained within a string.
+ * @str: The string to be searched.
+ *
+ * Return: The index marking the end of the initial word pointed to by str.
+ */
+int word_len(char *str)
 {
-	return (c == ' ');
+	int index = 0, len = 0;
+
+	while (*(str + index) && *(str + index) != ' ')
+	{
+		len++;
+		index++;
+	}
+
+	return (len);
 }
 
+/**
+ * count_words - Counts the number of words contained within a string.
+ * @str: The string to be searched.
+ *
+ * Return: The number of words contained within str.
+ */
 int count_words(char *str)
 {
-	int count = 0;
-	int in_word = 0;
+	int index = 0, words = 0, len = 0;
 
-	for (int i = 0; str[i] != '\0'; i++)
+	for (index = 0; *(str + index); index++)
+		len++;
+
+	for (index = 0; index < len; index++)
 	{
-		if (is_space(str[i]))
+		if (*(str + index) != ' ')
 		{
-			if (in_word)
-			{
-				count++;
-				in_word = 0;
-			}
-		}
-		else
-		{
-			in_word = 1;
+			words++;
+			index += word_len(str + index);
 		}
 	}
 
-	if (in_word)
-	{
-		count++;
-	}
-
-	return (count);
+	return (words);
 }
 
-int word_length(char *str)
-{
-	int length = 0;
-
-	while (!is_space(str[length]) && str[length] != '\0')
-		length++;
-	return (length);
-}
-
+/**
+ * strtow - Splits a string into words.
+ * @str: The string to be split.
+ *
+ * Return: If str = NULL, str = "", or the function fails - NULL.
+ *         Otherwise - a pointer to an array of strings (words).
+ */
 char **strtow(char *str)
 {
-	if (str == NULL || *str == '\0')
+	char **strings;
+	int index = 0, words, w, letters, l;
+
+	if (str == NULL || str[0] == '\0')
 		return (NULL);
 
-	int num_words = count_words(str);
-	char **words = (char **)malloc((num_words + 1) * sizeof(char *));
-
-	if (words == NULL)
+	words = count_words(str);
+	if (words == 0)
 		return (NULL);
 
-	int word_index = 0;
-	int i = 0;
+	strings = malloc(sizeof(char *) * (words + 1));
+	if (strings == NULL)
+		return (NULL);
 
-	while (str[i] != '\0')
+	for (w = 0; w < words; w++)
 	{
-		while (is_space(str[i]))
-			i++;
-		if (str[i] == '\0')
-		{
-			break;
-		}
-		int len = word_length(&str[i]);
+		while (str[index] == ' ')
+			index++;
 
-		words[word_index] = (char *)malloc((len + 1) * sizeof(char));
-		if (words[word_index] == NULL)
+		letters = word_len(str + index);
+
+		strings[w] = malloc(sizeof(char) * (letters + 1));
+
+		if (strings[w] == NULL)
 		{
-			for (int j = 0; j < word_index; j++)
-				free(words[j]);
-			free(words);
+			for (; w >= 0; w--)
+				free(strings[w]);
+
+			free(strings);
 			return (NULL);
 		}
-		for (int j = 0; j < len; j++)
-			words[word_index][j] = str[i + j];
-		words[word_index][len] = '\0';
-		word_index++;
-		i += len;
+
+		for (l = 0; l < letters; l++)
+			strings[w][l] = str[index++];
+
+		strings[w][l] = '\0';
 	}
+	strings[w] = NULL;
 
-	words[word_index] = NULL;
-	return (words);
-
+	return (strings);
 }
